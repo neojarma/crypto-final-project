@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  web-service:
+    build: ./web-service
+    restart: always
+    ports:
+      - "8080:80"
+    container_name: crypto-web-service
+    depends_on:
+      - mysql
+    environment:
+      - HOST=mysql
+      - DB_USER=admin
+      - DB_PASS=admin
+      - DATABASE=crypto
+    image: crypto-web-service
+  
+  java-app-client-1:
+    build: ./java-app-1
+    restart: always
+    container_name: java-app-client-1
+    stdin_open: true
+    tty: true
+    image: java-app-client-1
+  
+  java-app-client-2:
+    build: ./java-app-2
+    restart: always
+    container_name: java-app-client-2
+    stdin_open: true
+    tty: true
+    image: java-app-client-2
+  
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+      - MYSQL_DATABASE=crypto
+      - MYSQL_ROOT_PASSWORD=superadmin
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    container_name: crypto-mysql
+    
+    
