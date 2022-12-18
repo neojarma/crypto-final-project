@@ -132,8 +132,13 @@ public class FinalApplication {
 		if (respApi.message.equals("there is no messages from "+sender)) return;
 		
 		System.out.println("there is "+respApi.data.size()+" unread messages from " + sender);
-		for (int i = 1; i <= respApi.data.size(); i++) {
-			System.out.println(i+". "+Crypto.decrypt(respApi.data.get(i-1).message, privKey));
+		try {
+			for (int i = 1; i <= respApi.data.size(); i++) {
+				System.out.println(i+". "+Crypto.decrypt(respApi.data.get(i-1).message, privKey));
+			}
+		} catch (Exception e) {
+			System.out.println("broken private key");
+			return;
 		}
 	}
 }
