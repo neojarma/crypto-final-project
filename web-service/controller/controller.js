@@ -23,12 +23,16 @@ pool.on('error', (err) => {
 
         const query = "CREATE TABLE IF NOT EXISTS messages ( id int(11) NOT NULL AUTO_INCREMENT, sender varchar(10) NOT NULL, receiver varchar(10) NOT NULL, message text NOT NULL, read_status tinyint(1) NOT NULL DEFAULT 0, PRIMARY KEY(id) )"
 
-        connection.query(query, function (err) {
-            if(err) throw err
-        })
+        try {
+            connection.query(query, function (err) {
+                if(err) throw err
+            })
 
-        console.log("success initialize table")
-        connection.release();
+        } catch (error) {
+        }
+
+        console.log("success connect to db")
+        console.log("success create table")
     })
 }())
 
